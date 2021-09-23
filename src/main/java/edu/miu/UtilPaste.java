@@ -144,7 +144,7 @@ TriFunction<List<User>, Integer, Integer, List<Language>> listTopUsedLanguagesPe
                     .collect(Collectors.toList());
 
 
-    TriFunction<Administrator,Integer,Long, List<Paste>> listOfKTopRatedPastesInAGivenYear =
+    TriFunction<Administrator,Integer,Long, List<Paste>> listOfKTopFeedbackPastesInAGivenYear =
             (admin, k, year) -> usersToMembers.apply(administratorToUsers.apply(admin)).stream()
                     .flatMap(paste -> paste.getPasteList().stream())
                     .filter(paste -> paste.getPasteDateTime().getYear() == year )
@@ -156,6 +156,26 @@ TriFunction<List<User>, Integer, Integer, List<Language>> listTopUsedLanguagesPe
                     .limit(k)
                     .map(memberLongTuple -> memberLongTuple.getKey())
                     .collect(Collectors.toList());
+
+//    TriFunction<Administrator,Integer,Long, List<Paste>> listOfKTopRatingPastesInAGivenYear =
+//            (admin, k, year) -> usersToMembers.apply(administratorToUsers)
+//                    .stream()
+//                    .collect(Collectors.groupingBy(p -> p.getPasteList()))
+//                    .entrySet()
+//    TriFunction<Administrator,Integer,Long, List<Paste>> listOfKTopRatingPastesInAGivenYear =
+//            (admin, k, year) -> usersToMembers.apply(administratorToUsers.apply(admin))
+//                    .stream()
+//                    .flatMap(paste -> paste.getPasteList().stream())
+//                    .filter(paste -> paste.getPasteDateTime().getYear() == year )
+//                    .flatMap(paste -> paste.getRating().stream())
+//                    .collect(Collectors.groupingBy(Feedback::getPaste))
+//                    .entrySet().stream()
+//                    .map(listEntry -> new Tuple<Paste, Long>(listEntry.getKey(), listEntry.getValue().stream().count()))
+//                    .sorted((o1, o2) -> o2.getValue().intValue() - o1.getValue().intValue())
+//                    .limit(k)
+//                    .map(memberLongTuple -> memberLongTuple.getKey())
+//                    .collect(Collectors.toList());
+
 
     TriFunction<Administrator, Integer, Integer, List<Member>> listActiveUserPerYear =
             (admin, kOfUser, year) ->
